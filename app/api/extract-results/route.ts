@@ -44,10 +44,11 @@ Rules:
 - Do not invent missing subjects.
               `.trim(),
             },
-            {
-              type: "input_image",
-              image_url: `data:${mimeType};base64,${base64Image}`,
-            },
+                {
+		  type: "input_image",
+		  image_url: `data:${mimeType};base64,${base64Image}`,
+		  detail: "auto",
+		},
           ],
         },
       ],
