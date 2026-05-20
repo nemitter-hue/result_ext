@@ -9,11 +9,10 @@ type ResultItem = {
   grade: string;
 };
 
-const SUBJECT_ALIASES: Record<string, string> = {
+const JHS_ALIASES: Record<string, string> = {
   "ENGLISH": "ENGLISH LANGUAGE",
   "ENGLISH LANG": "ENGLISH LANGUAGE",
   "ENG LANG": "ENGLISH LANGUAGE",
-  "CORE ENGLISH": "ENGLISH LANGUAGE",
   "ENGLISH LANGUAGE": "ENGLISH LANGUAGE",
 
   "MATH": "MATHEMATICS",
@@ -21,11 +20,77 @@ const SUBJECT_ALIASES: Record<string, string> = {
   "MATS": "MATHEMATICS",
   "MATHEMATICS": "MATHEMATICS",
 
-  "CORE MATH": "CORE MATHEMATICS",
-  "MATHS CORE": "CORE MATHEMATICS",
+  "SCIENCE": "INTERGRATED SCIENCE",
+  "INTEGRATED SCIENCE": "INTERGRATED SCIENCE",
+  "INTERGRATED SCIENCE": "INTERGRATED SCIENCE",
+
+  "SOCIAL": "SOCIAL STUDIES",
+  "SOCIAL STUDIES": "SOCIAL STUDIES",
+
+  "RME": "RME",
+  "RELIGIOUS AND MORAL EDUCATION": "RME",
+  "RELIGIOUS & MORAL EDUCATION": "RME",
+
+  "ICT": "ICT",
+  "I.C.T": "ICT",
+
+  "FRENCH": "FRENCH",
+
+  "GA": "GHANAIAN LANGUAGE",
+  "TWI": "GHANAIAN LANGUAGE",
+  "ASANTE TWI": "GHANAIAN LANGUAGE",
+  "FANTE": "GHANAIAN LANGUAGE",
+  "DANGME": "DANGME",
+  "GHANAIAN LANGUAGE": "GHANAIAN LANGUAGE",
+
+  "BDT": "BDT",
+  "B.D.T": "BDT",
+  "BASIC DESIGN TECHNOLOGY": "BDT",
+
+  "CAREER TECHNOLOGY": "CAREER TECHNOLOGY",
+  "CREATIVE ART": "CREATIVE ART AND DESIGN",
+  "CREATIVE ARTS": "CREATIVE ART AND DESIGN",
+  "CREATIVE ART AND DESIGN": "CREATIVE ART AND DESIGN",
+
+  "CULTURAL STUDIES": "CULTURAL STUDIES",
+
+  "AGRIC": "AGRICULTURAL SCIENCE",
+  "AGRICULTURE": "AGRICULTURAL SCIENCE",
+  "AGRICULTURAL SCIENCE": "AGRICULTURAL SCIENCE",
+
+  "LIFE SKILLS": "LIFE SKILLS",
+  "TECHNICAL SKILLS": "TECHNICAL SKILLS",
+  "VOCATIONAL SKILLS": "VOCATIONAL SKILLS",
+
+  "TECH DRAWING": "TECHNICAL DRAWING",
+  "TECHNICAL DRAWING": "TECHNICAL DRAWING",
+
+  "PRE TECH": "PRE-TECHNICAL SKILLS",
+  "PRE-TECH": "PRE-TECHNICAL SKILLS",
+  "PRE-TECHNICAL SKILLS": "PRE-TECHNICAL SKILLS",
+
+  "BASKETRY": "BASKETRY",
+  "CATERING": "CATERING",
+  "SEWING": "SEWING",
+  "BEADMAKING": "BEADMAKING",
+  "HISTORY": "HISTORY",
+  "GEOGRAPHY": "GEOGRAPHY"
+};
+
+const SHS_ALIASES: Record<string, string> = {
+  "ENGLISH": "ENGLISH LANGUAGE",
+  "ENGLISH LANG": "ENGLISH LANGUAGE",
+  "ENG LANG": "ENGLISH LANGUAGE",
+  "CORE ENGLISH": "ENGLISH LANGUAGE",
+  "ENGLISH LANGUAGE": "ENGLISH LANGUAGE",
+
+  "MATH": "CORE MATHEMATICS",
+  "MATHS": "CORE MATHEMATICS",
   "MATHEMATICS CORE": "CORE MATHEMATICS",
   "MATHEMATICS (CORE)": "CORE MATHEMATICS",
+  "CORE MATH": "CORE MATHEMATICS",
   "CORE MATHEMATICS": "CORE MATHEMATICS",
+  "MATHEMATICS": "MATHEMATICS",
 
   "SCIENCE": "INTEGRATED SCIENCE",
   "CORE SCIENCE": "INTEGRATED SCIENCE",
@@ -35,73 +100,138 @@ const SUBJECT_ALIASES: Record<string, string> = {
   "SOCIAL": "SOCIAL STUDIES",
   "SOCIAL STUDIES": "SOCIAL STUDIES",
 
-  "CRS": "CHRISTIAN REL STUD",
-  "CHRISTIAN RELIGIOUS STUDIES": "CHRISTIAN REL STUD",
-  "CHRISTAIN REL STUD": "CHRISTIAN REL STUD",
-  "CHRISTIAN REL STUD": "CHRISTIAN REL STUD",
-
-  "LIT-IN-ENGLISH": "LITERATURE IN ENGLISH",
-  "LITERATURE": "LITERATURE IN ENGLISH",
-  "LITERATURE IN ENGLISH": "LITERATURE IN ENGLISH",
-
-  "PRIN OF COST ACCT": "PRIN OF COST ACCTS",
-  "PRIN OF COST ACCTS": "PRIN OF COST ACCTS",
-  "COST ACCOUNTING": "PRIN OF COST ACCTS",
-  "PRINCIPLES OF COST ACCOUNTING": "PRIN OF COST ACCTS",
-
-  "BUS MATHS": "BUS MATHS & COST",
-  "BUSINESS MATHEMATICS": "BUS MATHS & COST",
-  "BUS MATHS & COST": "BUS MATHS & COST",
-  "BUS MATHS & COSTING": "BUS MATHS & COST",
-
-  "ICT": "ICT",
-  "I.C.T": "ICT",
-  "INFO TECH": "INFO COM TECH (ELECTIVE)",
-  "ICT ELECTIVE": "INFO COM TECH (ELECTIVE)",
-  "INFO COM TECH (ELECTIVE)": "INFO COM TECH (ELECTIVE)",
-
-  "GA": "GHANAIAN LANGUAGE",
-  "TWI": "GHANAIAN LANGUAGE",
-  "ASANTE TWI": "GHANAIAN LANGUAGE",
-  "FANTE": "GHANAIAN LANGUAGE",
-  "DANGME": "GHANAIAN LANGUAGE",
-  "GHANAIAN LANGUAGE": "GHANAIAN LANGUAGE",
-
-  "BDT": "BDT",
-  "B.D.T": "BDT",
-  "BASIC DESIGN TECHNOLOGY": "BDT",
-
-  "RME": "RME",
-  "RELIGIOUS AND MORAL EDUCATION": "RME",
-  "RELIGIOUS & MORAL EDUCATION": "RME",
-
   "BIO": "BIOLOGY",
   "BIOLOGY": "BIOLOGY",
   "CHEM": "CHEMISTRY",
   "CHEMISTRY": "CHEMISTRY",
   "PHYSICS": "PHYSICS",
+
+  "CRS": "CRS",
+  "CHRISTIAN RELIGIOUS STUDIES": "CHRISTAIN REL STUD",
+  "CHRISTIAN REL STUD": "CHRISTAIN REL STUD",
+  "CHRISTAIN REL STUD": "CHRISTAIN REL STUD",
+
+  "IRS": "IRS",
+  "GOVT": "GOVERNMENT",
+  "GOVERNMENT": "GOVERNMENT",
+
   "ECONS": "ECONOMICS",
   "ECONOMICS": "ECONOMICS",
+
   "ACCOUNTS": "ACCOUNTING",
   "ACCOUNTING": "ACCOUNTING",
   "FINANCIAL ACCOUNTING": "FINANCIAL ACCOUNTING",
+
+  "COST ACCOUNTING": "PRIN OF COST ACCTS",
+  "PRIN OF COST ACCT": "PRIN OF COST ACCTS",
+  "PRIN OF COST ACCTS": "PRIN OF COST ACCTS",
+  "PRINCIPLES OF COST ACCOUNTING": "PRIN OF COST ACCTS",
+
+  "POA": "PRINCIPALS OF ACCOUNTING",
+  "PRINCIPLES OF ACCOUNTING": "PRINCIPALS OF ACCOUNTING",
+  "PRINCIPALS OF ACCOUNTING": "PRINCIPALS OF ACCOUNTING",
+
   "BUSINESS MANAGEMENT": "BUSINESS MANAGEMENT",
+  "BUSINESS METHODS": "BUSINESS METHOD",
+  "BUSINESS METHOD": "BUSINESS METHOD",
+  "INTRO TO BUSINESS METHODS": "INTRO TO BUS METHODS",
+  "INTRO TO BUS METHODS": "INTRO TO BUS METHODS",
+
+  "BUSINESS MATHEMATICS": "BUS MATHS & COST",
+  "BUS MATHS": "BUS MATHS & COST",
+  "BUS MATHS & COST": "BUS MATHS & COST",
+  "BUS MATHS & COSTING": "BUS MATHS & COST",
+
   "COMMERCE": "COMMERCE",
+  "GKA": "GKA",
+  "GEOGRAPHY": "GEOGRAPHY",
+  "HISTORY": "HISTORY",
   "FRENCH": "FRENCH",
+  "GHANAIAN LANGUAGE": "GHANAIAN LANGUAGE",
+
+  "AGRIC": "AGRICULTURAL SCIENCE",
+  "AGRICULTURE": "AGRICULTURAL SCIENCE",
+  "AGRICULTURAL SCIENCE": "AGRICULTURAL SCIENCE",
+
+  "TEXTILES": "TEXTILES",
+  "GRAPHICS": "GRAPHIC DESIGN",
+  "GRAPHIC DESIGN": "GRAPHIC DESIGN",
+  "PICTURE MAKING": "PICTURE MAKING",
+
+  "LITERATURE": "LITERATURE IN ENGLISH",
+  "LIT-IN-ENGLISH": "LITERATURE IN ENGLISH",
+  "LITERATURE IN ENGLISH": "LITERATURE IN ENGLISH",
+
+  "TYPEWRITING": "TYPEWRITTING",
+  "TYPEWRITTING": "TYPEWRITTING",
+
+  "FOOD AND NUTRITION": "FOOD & NUTRITION",
+  "FOOD & NUTRITION": "FOOD & NUTRITION",
+
+  "MANAGEMENT IN LIVING": "MGT IN LIVING",
+  "MGT IN LIVING": "MGT IN LIVING",
+
+  "INFO TECH": "INFO COM TECH (ELECTIVE)",
+  "ICT ELECTIVE": "INFO COM TECH (ELECTIVE)",
+  "INFO COM TECH (ELECTIVE)": "INFO COM TECH (ELECTIVE)",
+
+  "HEALTH SCIENCE": "HEALTH SCIENCE",
+  "TECHNICAL DRAWING": "TECHNICAL DRAWING",
+  "LIFE SKILLS": "LIFE SKILLS"
 };
+
+const JHS_GRADE_ALIASES: Record<string, string> = {
+  "A": "1",
+  "B": "2",
+  "C": "3",
+  "D": "4",
+  "E": "5",
+  "F": "6",
+
+  "A1": "1",
+  "B2": "2",
+  "B3": "3",
+  "C4": "4",
+  "C5": "5",
+  "C6": "6",
+  "D7": "7",
+  "E8": "8",
+  "F9": "9",
+
+  "1": "1",
+  "2": "2",
+  "3": "3",
+  "4": "4",
+  "5": "5",
+  "6": "6",
+  "7": "7",
+  "8": "8",
+  "9": "9"
+};
+
+function getAliases(level: Level) {
+  return level === "JHS" ? JHS_ALIASES : SHS_ALIASES;
+}
 
 function normalizeText(value: string) {
   return value.trim().toUpperCase().replace(/\s+/g, " ");
 }
 
-function normalizeSubject(subject: string) {
+function normalizeSubject(subject: string, level: Level) {
   const clean = normalizeText(subject);
-  return SUBJECT_ALIASES[clean] || clean;
+  const aliases = getAliases(level);
+  return aliases[clean] || clean;
 }
 
-function looksKnown(subject: string) {
+function normalizeGrade(grade: string, level: Level) {
+  const clean = normalizeText(grade);
+  if (level === "JHS") return JHS_GRADE_ALIASES[clean] || clean;
+  return clean;
+}
+
+function looksKnown(subject: string, level: Level) {
   const clean = normalizeText(subject);
-  return Object.values(SUBJECT_ALIASES).includes(clean);
+  return Object.values(getAliases(level)).includes(clean);
 }
 
 export default function HomePage() {
@@ -138,9 +268,9 @@ export default function HomePage() {
     }
 
     const cleanedResults = (data.results || []).map((r: ResultItem) => ({
-      subject: normalizeSubject(r.subject),
-      grade: normalizeText(r.grade),
-    }));
+ 	 subject: normalizeSubject(r.subject, level),
+ 	 grade: normalizeGrade(r.grade, level),
+	}));
 
     setResults(cleanedResults);
   }
@@ -151,7 +281,10 @@ export default function HomePage() {
         i === index
           ? {
               ...item,
-              [field]: field === "subject" ? normalizeSubject(value) : normalizeText(value),
+              [field]:
+  field === "subject"
+    ? normalizeSubject(value, level)
+    : normalizeGrade(value, level),
             }
           : item
       )
@@ -265,7 +398,7 @@ export default function HomePage() {
                         </td>
 
                         <td className="border p-2 text-center">
-                          {looksKnown(r.subject) ? (
+                        {looksKnown(r.subject, level) ? (
                             <span className="rounded bg-green-100 px-2 py-1 text-xs font-semibold text-green-700">
                               OK
                             </span>
@@ -325,7 +458,7 @@ export default function HomePage() {
 function generateHrScript(level: Level, results: ResultItem[]) {
   const cleaned = results
     .filter((r) => r.subject.trim() && r.grade.trim())
-    .map((r) => [normalizeSubject(r.subject), normalizeText(r.grade)]);
+    .map((r) => [normalizeSubject(r.subject, level), normalizeGrade(r.grade, level)]);
 
   const entriesName = level === "SHS" ? "shsEntries" : "entries";
   const addFunction = level === "SHS" ? "addShsSubjects" : "addSubjects";
@@ -336,7 +469,9 @@ function generateHrScript(level: Level, results: ResultItem[]) {
   return `
 const ${entriesName} = ${JSON.stringify(cleaned, null, 2)};
 
-const aliases = ${JSON.stringify(SUBJECT_ALIASES, null, 2)};
+const aliases = ${JSON.stringify(level === "JHS" ? JHS_ALIASES : SHS_ALIASES, null, 2)};
+
+const gradeAliases = ${JSON.stringify(level === "JHS" ? JHS_GRADE_ALIASES : {}, null, 2)};
 
 function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -414,7 +549,7 @@ async function ${addOneFunction}(subject, grade) {
   realClick([...document.querySelectorAll("input")].at(-1));
   await wait(500);
 
-  clickListItem(String(grade));
+clickListItem(gradeAliases[normalizeText(grade)] || String(grade));
   await wait(500);
 
   realClick(findButtonByIcon("check"));
