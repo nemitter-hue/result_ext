@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-type Level = "JHS" | "SHS";
+type Level = "JHS" | "SHS" | "DEGREE";
 
 type ResultItem = {
   subject: string;
@@ -27,61 +27,46 @@ const JHS_ALIASES: Record<string, string> = {
   "ENGLISH LANG": "ENGLISH LANGUAGE",
   "ENG LANG": "ENGLISH LANGUAGE",
   "ENGLISH LANGUAGE": "ENGLISH LANGUAGE",
-
   MATH: "MATHEMATICS",
   MATHS: "MATHEMATICS",
   MATS: "MATHEMATICS",
   MATHEMATICS: "MATHEMATICS",
-
   SCIENCE: "INTERGRATED SCIENCE",
   "INTEGRATED SCIENCE": "INTERGRATED SCIENCE",
   "INTERGRATED SCIENCE": "INTERGRATED SCIENCE",
-
   SOCIAL: "SOCIAL STUDIES",
   "SOCIAL STUDIES": "SOCIAL STUDIES",
-
   RME: "RME",
   "RELIGIOUS AND MORAL EDUCATION": "RME",
   "RELIGIOUS & MORAL EDUCATION": "RME",
-
   ICT: "ICT",
   "I.C.T": "ICT",
-
   FRENCH: "FRENCH",
-
   GA: "GHANAIAN LANGUAGE",
   TWI: "GHANAIAN LANGUAGE",
   "ASANTE TWI": "GHANAIAN LANGUAGE",
   FANTE: "GHANAIAN LANGUAGE",
   DANGME: "DANGME",
   "GHANAIAN LANGUAGE": "GHANAIAN LANGUAGE",
-
   BDT: "BDT",
   "B.D.T": "BDT",
   "BASIC DESIGN TECHNOLOGY": "BDT",
-
   "CAREER TECHNOLOGY": "CAREER TECHNOLOGY",
   "CREATIVE ART": "CREATIVE ART AND DESIGN",
   "CREATIVE ARTS": "CREATIVE ART AND DESIGN",
   "CREATIVE ART AND DESIGN": "CREATIVE ART AND DESIGN",
-
   "CULTURAL STUDIES": "CULTURAL STUDIES",
-
   AGRIC: "AGRICULTURAL SCIENCE",
   AGRICULTURE: "AGRICULTURAL SCIENCE",
   "AGRICULTURAL SCIENCE": "AGRICULTURAL SCIENCE",
-
   "LIFE SKILLS": "LIFE SKILLS",
   "TECHNICAL SKILLS": "TECHNICAL SKILLS",
   "VOCATIONAL SKILLS": "VOCATIONAL SKILLS",
-
   "TECH DRAWING": "TECHNICAL DRAWING",
   "TECHNICAL DRAWING": "TECHNICAL DRAWING",
-
   "PRE TECH": "PRE-TECHNICAL SKILLS",
   "PRE-TECH": "PRE-TECHNICAL SKILLS",
   "PRE-TECHNICAL SKILLS": "PRE-TECHNICAL SKILLS",
-
   BASKETRY: "BASKETRY",
   CATERING: "CATERING",
   SEWING: "SEWING",
@@ -96,7 +81,6 @@ const SHS_ALIASES: Record<string, string> = {
   "ENG LANG": "ENGLISH LANGUAGE",
   "CORE ENGLISH": "ENGLISH LANGUAGE",
   "ENGLISH LANGUAGE": "ENGLISH LANGUAGE",
-
   MATH: "CORE MATHEMATICS",
   MATHS: "CORE MATHEMATICS",
   "MATHEMATICS CORE": "CORE MATHEMATICS",
@@ -104,90 +88,70 @@ const SHS_ALIASES: Record<string, string> = {
   "CORE MATH": "CORE MATHEMATICS",
   "CORE MATHEMATICS": "CORE MATHEMATICS",
   MATHEMATICS: "MATHEMATICS",
-
   SCIENCE: "INTEGRATED SCIENCE",
   "CORE SCIENCE": "INTEGRATED SCIENCE",
   "INTEGRATED SCIENCE": "INTEGRATED SCIENCE",
   "INTERGRATED SCIENCE": "INTEGRATED SCIENCE",
-
   SOCIAL: "SOCIAL STUDIES",
   "SOCIAL STUDIES": "SOCIAL STUDIES",
-
   BIO: "BIOLOGY",
   BIOLOGY: "BIOLOGY",
   CHEM: "CHEMISTRY",
   CHEMISTRY: "CHEMISTRY",
   PHYSICS: "PHYSICS",
-
   CRS: "CRS",
   "CHRISTIAN RELIGIOUS STUDIES": "CHRISTAIN REL STUD",
   "CHRISTIAN REL STUD": "CHRISTAIN REL STUD",
   "CHRISTAIN REL STUD": "CHRISTAIN REL STUD",
-
   IRS: "IRS",
   GOVT: "GOVERNMENT",
   GOVERNMENT: "GOVERNMENT",
-
   ECONS: "ECONOMICS",
   ECONOMICS: "ECONOMICS",
-
   ACCOUNTS: "ACCOUNTING",
   ACCOUNTING: "ACCOUNTING",
   "FINANCIAL ACCOUNTING": "FINANCIAL ACCOUNTING",
-
   "COST ACCOUNTING": "PRIN OF COST ACCTS",
   "PRIN OF COST ACCT": "PRIN OF COST ACCTS",
   "PRIN OF COST ACCTS": "PRIN OF COST ACCTS",
   "PRINCIPLES OF COST ACCOUNTING": "PRIN OF COST ACCTS",
-
   POA: "PRINCIPALS OF ACCOUNTING",
   "PRINCIPLES OF ACCOUNTING": "PRINCIPALS OF ACCOUNTING",
   "PRINCIPALS OF ACCOUNTING": "PRINCIPALS OF ACCOUNTING",
-
   "BUSINESS MANAGEMENT": "BUSINESS MANAGEMENT",
   "BUSINESS METHODS": "BUSINESS METHOD",
   "BUSINESS METHOD": "BUSINESS METHOD",
   "INTRO TO BUSINESS METHODS": "INTRO TO BUS METHODS",
   "INTRO TO BUS METHODS": "INTRO TO BUS METHODS",
-
   "BUSINESS MATHEMATICS": "BUS MATHS & COST",
   "BUS MATHS": "BUS MATHS & COST",
   "BUS MATHS & COST": "BUS MATHS & COST",
   "BUS MATHS & COSTING": "BUS MATHS & COST",
-
   COMMERCE: "COMMERCE",
   GKA: "GKA",
   GEOGRAPHY: "GEOGRAPHY",
   HISTORY: "HISTORY",
   FRENCH: "FRENCH",
   "GHANAIAN LANGUAGE": "GHANAIAN LANGUAGE",
-
   AGRIC: "AGRICULTURAL SCIENCE",
   AGRICULTURE: "AGRICULTURAL SCIENCE",
   "AGRICULTURAL SCIENCE": "AGRICULTURAL SCIENCE",
-
   TEXTILES: "TEXTILES",
   GRAPHICS: "GRAPHIC DESIGN",
   "GRAPHIC DESIGN": "GRAPHIC DESIGN",
   "PICTURE MAKING": "PICTURE MAKING",
-
   LITERATURE: "LITERATURE IN ENGLISH",
   "LIT-IN-ENGLISH": "LITERATURE IN ENGLISH",
   "LITERATURE IN ENGLISH": "LITERATURE IN ENGLISH",
-
   TYPEWRITING: "TYPEWRITTING",
   TYPEWRITTING: "TYPEWRITTING",
-
   "FOOD AND NUTRITION": "FOOD & NUTRITION",
   "FOOD & NUTRITION": "FOOD & NUTRITION",
-
   "MANAGEMENT IN LIVING": "MGT IN LIVING",
   "MGT IN LIVING": "MGT IN LIVING",
-
   "INFO TECH": "INFO COM TECH (ELECTIVE)",
   "ICT ELECTIVE": "INFO COM TECH (ELECTIVE)",
   "INFO COM TECH (ELECTIVE)": "INFO COM TECH (ELECTIVE)",
-
   "HEALTH SCIENCE": "HEALTH SCIENCE",
   "TECHNICAL DRAWING": "TECHNICAL DRAWING",
   "LIFE SKILLS": "LIFE SKILLS",
@@ -200,7 +164,6 @@ const JHS_GRADE_ALIASES: Record<string, string> = {
   D: "4",
   E: "5",
   F: "6",
-
   A1: "1",
   B2: "2",
   B3: "3",
@@ -210,7 +173,6 @@ const JHS_GRADE_ALIASES: Record<string, string> = {
   D7: "7",
   E8: "8",
   F9: "9",
-
   "1": "1",
   "2": "2",
   "3": "3",
@@ -223,7 +185,9 @@ const JHS_GRADE_ALIASES: Record<string, string> = {
 };
 
 function getAliases(level: Level) {
-  return level === "JHS" ? JHS_ALIASES : SHS_ALIASES;
+  if (level === "JHS") return JHS_ALIASES;
+  if (level === "SHS") return SHS_ALIASES;
+  return {};
 }
 
 function normalizeText(value: string) {
@@ -365,9 +329,7 @@ export default function HomePage() {
     await navigator.clipboard.writeText(generatedScript);
     setCopied(true);
 
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
+    setTimeout(() => setCopied(false), 2000);
   }
 
   return (
@@ -395,6 +357,7 @@ export default function HomePage() {
             >
               <option value="JHS">JHS</option>
               <option value="SHS">SHS</option>
+              <option value="DEGREE">DEGREE</option>
             </select>
           </div>
 
@@ -639,20 +602,21 @@ function generateHrScript(
     ]);
 
   const cleanedDegrees = degrees
-    .filter((d) => d.discipline.trim() && d.gpa.trim() && d.class.trim())
+  .filter((d) => d.discipline.trim())
     .map((d) => ({
       discipline: d.discipline.trim().toUpperCase(),
       gpa: d.gpa.trim(),
       class: d.class.trim(),
     }));
 
-  const entriesName = level === "SHS" ? "shsEntries" : "entries";
-  const addFunction = level === "SHS" ? "addShsSubjects" : "addSubjects";
-  const addOneFunction =
-    level === "SHS" ? "addOneShsSubject" : "addOneSubject";
-  const getButtonFunction =
-    level === "SHS" ? "getShsAddSubjectButton" : "getJhsAddSubjectButton";
-  const sectionName = level === "SHS" ? "SHS RESULTS" : "JHS RESULT";
+const entriesName = level === "SHS" ? "shsEntries" : "entries";
+const addFunction = level === "SHS" ? "addShsSubjects" : "addSubjects";
+const addOneFunction =
+  level === "SHS" ? "addOneShsSubject" : "addOneSubject";
+const getButtonFunction =
+  level === "SHS" ? "getShsAddSubjectButton" : "getJhsAddSubjectButton";
+const sectionName = level === "SHS" ? "SHS RESULTS" : "JHS RESULT";
+const shouldRunSubjects = level !== "DEGREE";
 
   return `
 const ${entriesName} = ${JSON.stringify(cleaned, null, 2)};
@@ -717,19 +681,44 @@ function clickListItem(text) {
   realClick(item);
 }
 
+function simplifyText(text) {
+  return normalizeText(text)
+    .replace(/–/g, "-")
+    .replace(/—/g, "-")
+    .replace(/\s*-\s*/g, " ")
+    .replace(/\s+/g, " ");
+}
+
 function clickDropdownItemExact(text) {
-  const target = normalizeText(text);
+  const target = simplifyText(text);
 
-  const item = [...document.querySelectorAll(".v-list-item, [role='option']")]
-    .filter(el => el.offsetParent !== null)
-    .reverse()
-    .find(el => normalizeText(el.innerText) === target);
+  const items = [...document.querySelectorAll(".v-list-item, [role='option']")]
+    .filter(el => el.offsetParent !== null);
 
-  if (!item) throw new Error("Dropdown item not found: " + text);
+  console.table(
+    items.map((el, i) => ({
+      i,
+      text: normalizeText(el.innerText),
+      simplified: simplifyText(el.innerText),
+    }))
+  );
+
+  const item = items.find(el => {
+    const itemText = simplifyText(el.innerText);
+
+    return (
+      itemText === target ||
+      itemText.includes(target) ||
+      target.includes(itemText)
+    );
+  });
+
+  if (!item) {
+    throw new Error("Dropdown item not found: " + text);
+  }
 
   realClick(item);
 }
-
 function findButtonByIcon(iconName) {
   const btn = [...document.querySelectorAll("button")]
     .reverse()
@@ -755,6 +744,44 @@ function getVisibleInputs() {
     .filter(input => input.offsetParent !== null);
 }
 
+function getVisibleDropdownItems() {
+  return [...document.querySelectorAll(".v-list-item, [role='option']")]
+    .filter(el => el.offsetParent !== null)
+    .map(el => normalizeText(el.innerText))
+    .filter(Boolean);
+}
+
+async function findHonoursClassInput() {
+  const inputs = getVisibleInputs();
+
+  for (const input of inputs) {
+    if (input.placeholder !== "Select an item...") continue;
+
+    realClick(input);
+    await wait(500);
+
+    const items = getVisibleDropdownItems();
+
+    const hasHonours = items.some(item =>
+      item.includes("FIRST CLASS HONOURS") ||
+      item.includes("SECOND CLASS HONOURS") ||
+      item.includes("THIRD CLASS HONOURS")
+    );
+
+    if (hasHonours) return input;
+
+    document.dispatchEvent(new KeyboardEvent("keydown", {
+      key: "Escape",
+      code: "Escape",
+      bubbles: true
+    }));
+
+    await wait(200);
+  }
+
+  throw new Error("Honours class dropdown not found");
+}
+
 function ${getButtonFunction}() {
   const buttons = [...document.querySelectorAll("button")];
 
@@ -776,7 +803,6 @@ function ${getButtonFunction}() {
 async function fillInput(input, value) {
   realClick(input);
   await wait(200);
-
   setNativeValue(input, value);
   await wait(300);
 }
@@ -784,10 +810,8 @@ async function fillInput(input, value) {
 async function selectAutocomplete(input, value) {
   realClick(input);
   await wait(300);
-
   setNativeValue(input, value);
   await wait(800);
-
   clickDropdownItemExact(value);
   await wait(500);
 }
@@ -835,12 +859,16 @@ async function addOneDegreeEntry(degree) {
   const classInput = inputs[23];
 
   if (!disciplineInput) throw new Error("Discipline input not found at index 21");
-  if (!gpaInput) throw new Error("GPA input not found at index 22");
-  if (!classInput) throw new Error("Class input not found at index 23");
 
   await fillInput(disciplineInput, degree.discipline);
-  await fillInput(gpaInput, degree.gpa);
-  await selectAutocomplete(classInput, degree.class);
+
+  if (degree.gpa && gpaInput) {
+    await fillInput(gpaInput, degree.gpa);
+  }
+
+  if (degree.class && classInput) {
+    await fillInput(classInput, degree.class);
+  }
 
   realClick(findButtonByIcon("check"));
   await wait(1500);
@@ -855,7 +883,10 @@ async function addDegreeEntries(entries) {
 }
 
 (async function runAll() {
-  await ${addFunction}(${entriesName});
+  if (${JSON.stringify(shouldRunSubjects)}) {
+    await ${addFunction}(${entriesName});
+  }
+
   await addDegreeEntries(degreeEntries);
 })();
 `.trim();

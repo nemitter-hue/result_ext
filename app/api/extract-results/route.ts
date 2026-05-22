@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
+type Level = "JHS" | "SHS" | "DEGREE";
+
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -10,7 +12,7 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
 
     const file = formData.get("file") as File | null;
-    const level = formData.get("level") as "JHS" | "SHS" | null;
+    const level = formData.get("level") as Level | null;
 
     if (!file) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
@@ -33,22 +35,22 @@ export async function POST(req: NextRequest) {
             {
               type: "input_text",
               text: `
-Extract exam results and degree information from this Ghanaian ${level} certificate image.
+Extract information from this Ghanaian ${level} certificate image.
 
-Return subjects and grades exactly as visible.
-
-Exam result rules:
+If level is JHS or SHS:
+- Extract exam subjects and grades.
 - Use uppercase subject names.
 - Use exact grades: A1, B2, B3, C4, C5, C6, D7, E8, F9, or numeric grades if shown.
 - Omit subjects with no visible grade.
 - Do not invent missing subjects.
 
-Degree extraction rules:
-- Extract degree information only if visible.
+If level is DEGREE:
+- Extract degree information only.
 - Discipline means the programme, course, or field of study.
 - GPA means grade point average.
 - Class means degree classification.
 - Do not invent degree information if it is not visible.
+- Return results as an empty array.
 
 Allowed Class values:
 - First Class Honours
@@ -56,7 +58,8 @@ Allowed Class values:
 - Second Class Honours – Lower Division
 - Third Class Honours
 
-If degree information is not visible, return an empty degrees array.
+If no exam results are visible, return an empty results array.
+If no degree information is visible, return an empty degrees array.
               `.trim(),
             },
             {
@@ -78,7 +81,7 @@ If degree information is not visible, return an empty degrees array.
             properties: {
               level: {
                 type: "string",
-                enum: ["JHS", "SHS"],
+                enum: ["JHS", "SHS", "DEGREE"],
               },
               results: {
                 type: "array",
